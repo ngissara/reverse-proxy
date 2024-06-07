@@ -1,0 +1,29 @@
+version: "2.4"
+services:
+  reverse-proxy:
+    image: nginx
+    restart: unless-stopped
+    container_name: reverse-proxy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl/tmep.cer:/etc/nginx/ssl/tmep.cer
+      - ./nginx/ssl/tmep.key:/etc/nginx/ssl/tmep.key
+      - ./nginx/conf.d/keycloak.tmep.bancotdf.com.ar.conf:/etc/nginx/conf.d/keycloak.tmep.bancotdf.com.ar.conf
+      - ./nginx/conf.d/auth.tmep.bancotdf.com.ar.conf:/etc/nginx/conf.d/auth.tmep.bancotdf.com.ar.conf
+      - ./nginx/conf.d/wso2am.tmep.bancotdf.com.ar.conf:/etc/nginx/conf.d/wso2am.tmep.bancotdf.com.ar.conf
+      - ./nginx/conf.d/manager.tmep.bancotdf.com.ar.conf:/etc/nginx/conf.d/manager.tmep.bancotdf.com.ar.conf
+      - ./nginx/conf.d/tmep.bancotdf.com.ar.conf:/etc/nginx/conf.d/tmep.bancotdf.com.ar.conf
+      - ./nginx/conf.d/pases.tmep.bancotdf.com.ar.conf:/etc/nginx/conf.d/pases.tmep.bancotdf.com.ar.conf
+#      - ./nginx/conf.d/home.tmep.bancotdf.com.ar.conf:/etc/nginx/conf.d/home.tmep.bancotdf.com.ar.conf
+    networks:
+      - uw2-frontend
+networks:
+  uw2-frontend:
+    name: uw2-frontend
+    external: true
+#  uw2-backend:
+#    name: uw2-backend
+#    external: true
